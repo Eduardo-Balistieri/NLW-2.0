@@ -20,5 +20,4 @@ The project was developed with the following technologies:
 
 ## :art: Layouts
 
-:computer: [Web](https://www.figma.com/file/GHGS126t7WYjnPZdRKChJF/Proffy-Web)\
-:iphone: [Mobile](https://www.figma.com/file/e33KvgUpFdunXxJjHnK7CG/Proffy-Mobile)
+[Web](https://www.figma.com/file/GHGS126t7WYjnPZdRKChJF/Proffy-Web) and [Mobile](https://www.figma.com/file/e33KvgUpFdunXxJjHnK7CG/Proffy-Mobile)
