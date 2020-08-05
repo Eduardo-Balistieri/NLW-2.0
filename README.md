@@ -16,7 +16,8 @@ The project was developed with the following technologies:
 
 * React
 * TypeScript
-* ...
+* NodeJS
+* SQLite
 
 ## :art: Layouts
 
