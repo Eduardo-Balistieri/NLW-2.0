@@ -9,6 +9,7 @@ import whatsappIcon from '../../assets/images/icons/whatsapp.png'
 import styles from './styles'
 import api from '../../services/api'
 
+
 export interface Teacher {
     id: number
     name: string
