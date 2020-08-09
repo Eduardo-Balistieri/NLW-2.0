@@ -1,0 +1,59 @@
+.dynamic-input-block {
+    position: relative;
+}
+
+.dynamic-input-block label {
+    font-size: 1.4rem;
+}
+
+.dynamic-input-block input {
+    width: 100%;
+    height: 8rem;
+
+    margin-top: 1rem;
+
+    border-radius: 0.8rem;
+    background: var(--color-input-background);
+    border: 1px solid var(--color-line-in-white);
+    
+    outline: 0;
+    padding: 1.5rem 1.6rem 0 1.6rem;
+  
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.placeholder {
+    font-size: 1.6rem;
+    font-family: Archivo, sans-serif;
+    position: absolute;
+
+    top: 46%;
+    left: 2rem;
+
+    pointer-events: none;
+    user-select: none;
+    transition: .2s;
+    color: var(--color-text-complement);
+}
+.dynamic-block-touched {
+    font-size: 1.4rem;
+    left: 2.6%;
+    top: 20%;
+}
+
+
+
+.dynamic-block:focus-within::after {
+    width: 2px;
+    height: calc(100% - 2rem);
+
+    content: '';
+    background: var(--color-primary-light);
+    position: absolute;
+    border-radius: 1px;
+
+    left: 0;
+    bottom: 0.5rem;
+}
