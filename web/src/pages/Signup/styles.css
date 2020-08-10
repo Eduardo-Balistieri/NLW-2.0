@@ -72,6 +72,12 @@
     margin-top: 0.5rem;
     font: 400 1.4rem Poppins, sans-serif;
 }
+
+.invalid-information {
+    margin-top: 4rem;
+    color: #FF5050;
+}
+
 .signup-button {
     cursor: pointer;
     margin-top: 3rem;

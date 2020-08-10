@@ -5,26 +5,48 @@ import logoImg from '../../assets/images/logo.svg'
 import purpleHeart from '../../assets/images/icons/purple-heart.svg'
 import DynamicInput from '../../components/DynamicInput'
 import './styles.css'
-import api from '../../services/api'
+
+// hooks
+import { useAuth } from '../../contexts/auth'
 
 
 const Login = () => {
 
+    const { signIn } = useAuth()
+
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const [invalid, setInvalid] = useState(false)
+
+
+
+    const areInputsValid = () => {
+        if (!email.trim() || !password.trim())
+            return false
+
+        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        const isEmailValid = regex.test(String(email).toLowerCase())
+
+        if (!isEmailValid)
+            return false
+        return true
+    }
 
 
     const handleLogin = (event: FormEvent) => {
         event.preventDefault()
 
-        api.get('/login', {
-            params: {
-                email,
-                password
-            }
-        })
-            .then(response => console.log(response.data))
-            .catch(error => console.log(error))
+        if (!areInputsValid()) {
+            setInvalid(true)
+            return
+        }
+        const error = signIn(email, password)
+        if (error) {
+            console.log(error)
+            setInvalid(true)
+        }
     }
 
     return (
@@ -66,6 +88,12 @@ const Login = () => {
 
                         <Link to='/'>Esqueci minha senha</Link>
                     </div>
+
+                    {invalid && (
+                        <div className='invalid-information'>
+                            <p>Sua conta ou senha está incorreta.</p>
+                        </div>
+                    )}
 
                     <button type='submit' className='login-button'>
                         Entrar
