@@ -1,0 +1,147 @@
+#forgot-password-page {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+
+/* form wrapper */
+.forgot-password-form-wrapper {
+    height: 65%;
+}
+.back-button {
+    display: none;
+}
+
+.forgot-password-form {
+    padding: 5rem 4rem;
+}
+
+
+.main-forgot-password {
+    font-family: Poppins, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: var(--color-text-title);
+}
+.main-forgot-password h2 {
+    margin-bottom: 1.5rem;
+    font-size: 3.4rem;
+}
+
+.main-forgot-password p {
+    margin-bottom: 2.5rem;
+    font-size: 1.4rem;
+    color: var(--color-text-base);
+}
+
+
+
+/* logo part */
+.forgot-password-page-logo {
+    height: 35%;
+    background: url('../../assets/images/success-background.svg') center/65rem no-repeat;
+    background-color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.forgot-password-page-logo > div {
+    text-align: left;
+}
+
+.forgot-password-page-logo > div img {
+    width: 23rem;
+}
+.forgot-password-page-logo > div p {
+    max-width: 15rem;
+    color: var(--color-text-in-primary);
+    margin-top: 0.5rem;
+    font: 400 1.4rem Poppins, sans-serif;
+}
+
+.invalid-information {
+    margin-top: 4rem;
+    color: #FF5050;
+}
+
+.forgot-password-button {
+    cursor: pointer;
+    margin-top: 3rem;
+    width: 100%;
+    border: none;
+    color: var(--color-title-in-primary);
+    transition: background-color .2s;
+    background-color: var(--color-secundary);
+    padding: 1.8rem 0;
+    border-radius: 0.8rem;
+    
+    font: 400 1.9rem Poppins, sans-serif;
+}
+.forgot-password-button:hover {
+    background-color: var(--color-secundary-dark);
+}
+
+
+
+@media(min-width: 1100px) {
+    #forgot-password-page {
+        flex-direction: row;
+    }
+
+    /* left screen */
+    .forgot-password-form-wrapper {
+        width: 50%;
+        height: 100%;
+        
+        display: grid;
+        grid-template-rows: 8rem 1fr;
+        grid-template-columns: 1fr;
+        
+        align-items: center;
+        justify-content: center;
+    }
+
+    .back-button {
+        display: block;
+    }
+    .back-button img {
+        cursor: pointer;
+        margin-left: 15%;
+    }
+    
+    .forgot-password-form {
+        margin: 0 auto;
+        width: 60%;
+        height: auto;
+    }
+    
+    .main-forgot-password h2 {
+        margin-bottom: 1rem;
+        font-size: 4.2rem;
+    }
+    
+    .main-forgot-password p {
+        margin-bottom: 3rem;
+        font-size: 1.6rem;
+    }
+
+    /* right screen */
+    .forgot-password-page-logo {
+        background-size: 90%;
+        width: 50%;
+        height: 100%;
+    }
+    .forgot-password-page-logo > div img {
+        width: 33rem;
+    }
+    .forgot-password-page-logo > div p {
+        font-size: 2rem;
+        max-width: 25rem;
+    }
+}

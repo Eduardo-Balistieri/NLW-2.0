@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react'
+import React, { createContext, useState, useContext, useEffect } from 'react'
 import api from '../services/api'
 
 
@@ -13,7 +13,7 @@ interface User {
 interface AuthContextData {
     signed: boolean
     user: User | null
-    signIn(email: string, password: string): any
+    signIn(email: string, password: string, rememberPassword: boolean): any
     signOut(): void
 }
 
@@ -22,12 +22,26 @@ const AuthContext = (
     createContext<AuthContextData>({} as AuthContextData)
 )
 
-
 export const AuthProvider: React.FC = ({ children }) => {
 
-    const [user, setUser] = useState<User | null>(null)
 
-    const signIn = (email: string, password: string) => {
+    const [user, setUser] = useState<User | null>(null)
+    const [token, setToken] = useState<string>('')
+
+
+    useEffect(() => {
+        const storagedUser = localStorage.getItem('Auth:User')
+        const storagedToken = localStorage.getItem('Auth:Token')
+
+        if (storagedUser && storagedToken) {
+            api.defaults.headers['authorization'] = `Bearer ${storagedToken}`
+            setUser(JSON.parse(storagedUser))
+            setToken(storagedToken)
+        }
+    }, [])
+
+
+    const signIn = (email: string, password: string, rememberPassword: boolean) => {
         api.get('/login', {
             params: {
                 email,
@@ -35,7 +49,16 @@ export const AuthProvider: React.FC = ({ children }) => {
             }
         })
             .then(response => {
-                setUser(response.data)
+                const { user, token } = response.data
+                api.defaults.headers['authorization'] = `Bearer ${token}`
+
+                if (rememberPassword) {
+                    localStorage.setItem('Auth:User', JSON.stringify(user))
+                    localStorage.setItem('Auth:Token', token)
+                }
+
+                setUser(user)
+                setToken(token)
             })
             .catch(error => {
                 return error
@@ -44,6 +67,10 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     const signOut = () => {
         setUser(null)
+        setToken('')
+
+        localStorage.removeItem('Auth:User')
+        localStorage.removeItem('Auth:Token')
     }
 
     return (

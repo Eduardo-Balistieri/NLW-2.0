@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import db from '../database/connection'
 import convertHourToMinutes from '../utils/convertHourToMinutes'
 
+
 interface ScheduleItem {
     week_day: number
     from: string
@@ -18,7 +19,7 @@ export default class ClassesController {
         const subject = filters.subject as string
         const time = filters.time as string
 
-        if (!week_day || !subject || !time) {
+        if (!week_day.trim() || !subject.trim() || !time.trim()) {
             return res.status(400).json({
                 error: 'Missing filters to search classes'
             })
@@ -43,17 +44,25 @@ export default class ClassesController {
         res.json(classes)
     }
 
+
     async create(req: Request, res: Response) {
 
-        const { email, password, name, avatar, whatsapp, bio, subject, cost, schedule } = req.body
+        const { email, subject, cost, schedule } = req.body
         const trx = await db.transaction()
 
         try {
-            const insertedUsersIds = await trx('users').insert({ email, password, name, avatar, whatsapp, bio })
+            const user = await trx('users')   // check if user exists
+                .where({
+                    email
+                })
+                .select()
 
-            const user_id = insertedUsersIds[0]
+            if (!user)
+                res.status(401).send('This user doesn\'t exists')
+            const user_id = user[0].id
+
+
             const insertedClassesIds = await trx('classes').insert({ subject, cost, user_id })
-
 
             const class_id = insertedClassesIds[0]
             const classSchedule = schedule.map((scheduleItem: ScheduleItem) => {

@@ -19,7 +19,7 @@ const Login = () => {
     const [password, setPassword] = useState('')
 
     const [invalid, setInvalid] = useState(false)
-
+    const [rememberPassword, setRememberPassword] = useState(false)
 
 
     const areInputsValid = () => {
@@ -42,7 +42,7 @@ const Login = () => {
             setInvalid(true)
             return
         }
-        const error = signIn(email, password)
+        const error = signIn(email, password, rememberPassword)
         if (error) {
             console.log(error)
             setInvalid(true)
@@ -82,11 +82,15 @@ const Login = () => {
 
                     <div className='password-options'>
                         <div className='remember-password'>
-                            <input type='checkbox' className='checkbox' />
+                            <input
+                                type='checkbox'
+                                className='checkbox'
+                                onClick={() => setRememberPassword(!rememberPassword)}
+                            />
                             <p>Lembrar-me</p>
                         </div>
 
-                        <Link to='/'>Esqueci minha senha</Link>
+                        <Link to='/forgot-password'>Esqueci minha senha</Link>
                     </div>
 
                     {invalid && (

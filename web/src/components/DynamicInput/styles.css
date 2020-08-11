@@ -8,7 +8,7 @@
 
 .dynamic-input-block input {
     width: 100%;
-    height: 8rem;
+    height: 7.3rem;
 
     margin-top: 1rem;
 
@@ -29,7 +29,7 @@
     font-family: Archivo, sans-serif;
     position: absolute;
 
-    top: 46%;
+    top: 47%;
     left: 2rem;
 
     pointer-events: none;
@@ -39,21 +39,21 @@
 }
 .dynamic-block-touched {
     font-size: 1.4rem;
-    left: 2.6%;
+    left: 1.5rem;
     top: 20%;
 }
 
 
 
-.dynamic-block:focus-within::after {
+.dynamic-input-block:focus-within::after {
     width: 2px;
-    height: calc(100% - 2rem);
+    height: calc(100% - 2.5rem);
 
     content: '';
     background: var(--color-primary-light);
     position: absolute;
     border-radius: 1px;
 
-    left: 0;
-    bottom: 0.5rem;
+    left: 1px;
+    bottom: 0.8rem;
 }

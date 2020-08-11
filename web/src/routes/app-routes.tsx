@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 
 import Landing from '../pages/Landing'
 import TeacherList from '../pages/TeacherList'
@@ -10,9 +10,12 @@ const AppRoutes = () => {
 
     return (
         <BrowserRouter>
-            <Route path='/' component={Landing} />
-            <Route path='/study' component={TeacherList} />
-            <Route path='/give-classes' component={TeacherForm} />
+            <Switch>
+                <Route exact path='/' component={Landing} />
+                <Route path='/study' component={TeacherList} />
+                <Route path='/give-classes' component={TeacherForm} />
+                <Redirect to='/' />
+            </Switch>
         </BrowserRouter>
     )
 }
