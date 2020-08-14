@@ -25,27 +25,21 @@ const Login = () => {
     const areInputsValid = () => {
         if (!email.trim() || !password.trim())
             return false
-
         const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        const isEmailValid = regex.test(String(email).toLowerCase())
-
-        if (!isEmailValid)
-            return false
-        return true
+        return regex.test(String(email).toLowerCase())
     }
 
 
-    const handleLogin = (event: FormEvent) => {
+    const handleLogin = async (event: FormEvent) => {
         event.preventDefault()
 
         if (!areInputsValid()) {
-            setInvalid(true)
-            return
+            return setInvalid(true)
         }
-        const error = signIn(email, password, rememberPassword)
+        const error = await signIn(email, password, rememberPassword)
         if (error) {
-            console.log(error)
             setInvalid(true)
+            console.log(error)
         }
     }
 
@@ -95,7 +89,7 @@ const Login = () => {
 
                     {invalid && (
                         <div className='invalid-information'>
-                            <p>Sua conta ou senha está incorreta.</p>
+                            <p>Sua e-mail ou sua senha está incorreta.</p>
                         </div>
                     )}
 

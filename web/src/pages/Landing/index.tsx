@@ -9,6 +9,7 @@ import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg'
 
 import './styles.css'
 import api from '../../services/api'
+import { useAuth } from '../../contexts/auth'
 
 
 const Lading = () => {
@@ -23,8 +24,21 @@ const Lading = () => {
             })
     }, [])
 
+    const { user, signOut } = useAuth()
+    const avatar = user?.avatar
+
     return (
         <div id="page-landing">
+            <header className='page-landing-header'>
+                <Link to='/user-settings' className='user-info-wrapper'>
+                    {avatar ? <img src={avatar} alt="User avatar" /> : <div className='alternative-profile' />}
+                    <p>{user?.name}</p>
+                </Link>
+
+                <div onClick={signOut}>
+                    <p>Sair</p>
+                </div>
+            </header>
 
             <div id="page-landing-content" className="container">
 
@@ -48,7 +62,11 @@ const Lading = () => {
                 </div>
 
                 <span className="total-connections">
-                    Total de {totalConnections} conexões já realizadas <img src={purpleHeartIcon} alt="Coração roxo" />
+                    {totalConnections > 1 ?
+                        `Total de ${totalConnections} conexões já realizadas` :
+                        `Total de ${totalConnections} conexão já realizada`
+                    }
+                    <img src={purpleHeartIcon} alt="Coração roxo" />
                 </span>
 
             </div>

@@ -1,32 +1,44 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
-import logoImg from '../../assets/images/logo.svg'
+import proffyLogo from '../../assets/images/logo.svg'
 import backIcon from '../../assets/images/icons/back.svg'
 import './styles.css'
 
 interface PageHeaderProps {
-    title: string,
+    actualPage: string
+    title?: string
     description?: string
 }
 
-const PageHeader: React.FC<PageHeaderProps> = (props) => {
+const PageHeader: React.FC<PageHeaderProps> = ({ title, description, actualPage, children }) => {
+
+    const history = useHistory()
 
     return (
         <header className="page-header">
-            <div className="top-bar-container">
-                <Link to='/'>
-                    <img src={backIcon} alt="Voltar" />
+            <div className='header'>
+                <div className='header-back-button' onClick={() => history.goBack()}>
+                    <img src={backIcon} alt="Go back" />
+                </div>
+
+                <div className='actual-page'>
+                    <p>{actualPage}</p>
+                </div>
+
+                <Link to='/' className='header-proffy-logo'>
+                    <img src={proffyLogo} alt="Logo" />
                 </Link>
-                <img src={logoImg} alt="Proffy" />
             </div>
 
-            <div className="header-content">
-                <strong>{props.title}</strong>
-                {props.description && <p>{props.description}</p>}
+            {title &&
+                <div className="header-content">
+                    <strong>{title}</strong>
+                    {description && <p>{description}</p>}
 
-                {props.children}
-            </div>
+                    {children}
+                </div>
+            }
         </header>
     )
 }

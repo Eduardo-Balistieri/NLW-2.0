@@ -12,51 +12,57 @@ import { useAuth } from '../../contexts/auth'
 import api from '../../services/api'
 
 
-const TeacherForm = () => {
+
+const UserSettings = () => {
 
     const history = useHistory()
+
     const { user, updateUser } = useAuth()
+    const [invalid, setInvalid] = useState(false)
 
 
-    const [whatsapp, setWhatsapp] = useState(user?.whatsapp as string)
-    const [bio, setBio] = useState(user?.bio as string)
+    const fullName = user?.name
+    const index = fullName?.indexOf(' ') as number
+    const [name, setName] = useState(fullName?.slice(0, index))
+    const [surname, setSurname] = useState(fullName?.slice(index + 1, fullName.length))
+
+    const [email, setEmail] = useState(user?.email as string)
+    const [bio, setBio] = useState(user?.bio || '')
+    const [whatsapp, setWhatsapp] = useState(user?.whatsapp || '')
+    const [avatar] = useState(user?.avatar || null)
+
 
     const [subject, setSubject] = useState('')
-    const [cost, setCost] = useState('R$')
+    const [cost, setCost] = useState('')
 
+    const [schedules, setSchedules] = useState([{ from: '10:00', to: '15:00', week_day: 1 }])
 
-    // schedule
-    const [invalid, setInvalid] = useState(false)
-    const [scheduleItems, setScheduleItems] = useState([{ week_day: 1, from: '07:00', to: '13:00' }])
 
 
     const createSchedule = (event: any) => {
         event.preventDefault()
-        const newState = [...scheduleItems]
+        const newState = [...schedules]
         newState.unshift({ from: '', to: '', week_day: 1 })
-        setScheduleItems(newState)
+        setSchedules(newState)
     }
 
     const deleteSchedule = (index: number) => {
-        const newState = scheduleItems.filter((_, idx) => idx !== index)
-        setScheduleItems(newState)
+        const newState = schedules.filter((_, idx) => idx !== index)
+        setSchedules(newState)
     }
 
     const updateSchedule = (event: any, index: number, field: string) => {
-        const newState = [...scheduleItems]
+        const newState = [...schedules]
         newState[index] = { ...newState[index], [field]: event.target.value }
-        setScheduleItems(newState)
+        setSchedules(newState)
     }
 
 
 
-    const handleCreateClass = async (event: FormEvent) => {
+
+    const handleFormSubmit = async (event: FormEvent) => {
         event.preventDefault()
-
-        const name = user?.name as string
-        const email = user?.email as string
-
-        const error = await updateUser(email, name, whatsapp, bio)
+        const error = await updateUser(email, `${name} ${surname}`, whatsapp, bio)
 
         if (error) {
             console.log(error)
@@ -67,10 +73,10 @@ const TeacherForm = () => {
             email,
             subject,
             cost,
-            schedule: scheduleItems
+            schedule: schedules
         })
             .then(res => {
-                history.push('/success-register')
+                history.push('/')
             })
             .catch(err => {
                 console.log(err.response.data.error)
@@ -80,54 +86,66 @@ const TeacherForm = () => {
 
 
     return (
-        <div id="page-teacher-form" className="container">
-            <PageHeader
-                actualPage='Dar aulas'
-                title="Que incrível que você quer dar aulas."
-                description="O primeiro passo é preencher esse formulário de inscrição"
-            />
+        <div className='user-settings-page'>
+            <PageHeader actualPage='Meu perfil' />
 
-            <main>
-                <form onSubmit={handleCreateClass}>
-                    <fieldset>
-                        <legend>Seus dados</legend>
+            <div className='settings-wrapper'>
+                <div className='main-user-container'>
+                    {avatar ? <img src={avatar} alt="User avatar" /> : <div className='avatar-field' />}
+                    <p>{fullName}</p>
+                </div>
 
-                        <div className='user-info-desktop-65-35'>
+                <form className='user-settings-form' onSubmit={handleFormSubmit}>
 
-                            <div className='user-main-information'>
-                                {user?.avatar ?
-                                    <img src={user.avatar} alt='user avatar' /> :
-                                    <div className='alternative-avatar' />
-                                }
-                                <div>
-                                    <h3>{user?.name}</h3>
-                                    <p>{user?.email}</p>
-                                </div>
+                    <fieldset className='user-settings-fieldset'>
+                        <div className='fields-label'>
+                            <h2>Seus dados</h2>
+                        </div>
+                        <div>
+                            <div className="input-block-50-50-desktop">
+                                <Input
+                                    label='Nome'
+                                    name='name'
+                                    value={name}
+                                    onChange={event => setName(event.target.value)}
+                                />
+                                <Input
+                                    label='Sobrenome'
+                                    name='surname'
+                                    value={surname}
+                                    onChange={event => setSurname(event.target.value)}
+                                />
                             </div>
-
-                            <Input
-                                label="Whatsapp"
-                                name="whatsapp"
-                                value={whatsapp}
-                                onChange={event => setWhatsapp(event.target.value)}
+                            <div className='input-block-60-40-desktop'>
+                                <Input
+                                    label='E-mail'
+                                    name='email'
+                                    value={email}
+                                    onChange={event => setEmail(event.target.value)}
+                                />
+                                <Input
+                                    label='Whatsapp'
+                                    name='whatsapp'
+                                    value={whatsapp}
+                                    onChange={event => setWhatsapp(event.target.value)}
+                                />
+                            </div>
+                            <Textarea
+                                label='Biografia'
+                                name='bio'
+                                value={bio}
+                                onChange={event => setBio(event.target.value)}
                             />
                         </div>
-                        <Textarea
-                            label="Biografia"
-                            name="bio"
-                            value={bio}
-                            onChange={event => setBio(event.target.value)}
-                        />
-                    </fieldset>
 
-                    <fieldset>
-                        <legend>Sobre a aula</legend>
+                        <div className='fields-label'>
+                            <h2>Sobre a aula</h2>
+                        </div>
                         <div className='input-block-60-40-desktop'>
                             <Select
                                 label="Matéria"
                                 name="subject"
                                 value={subject}
-                                option="Selecione qual você quer ensinar"
                                 onChange={event => setSubject(event.target.value)}
                                 options={[
                                     { value: 'Artes', label: 'Artes' },
@@ -147,15 +165,16 @@ const TeacherForm = () => {
                                 onChange={event => setCost(event.target.value)}
                             />
                         </div>
-                    </fieldset>
 
-                    <fieldset>
-                        <legend>
-                            Horários disponíveis
-                           <button type="button" onClick={createSchedule}>+Novo</button>
-                        </legend>
+                        <div className='fields-label-divided'>
+                            <h2>Horários disponíveis</h2>
+                            <button
+                                onClick={createSchedule}>
+                                + Novo
+                            </button>
+                        </div>
 
-                        {scheduleItems.map((schedule, index) => (
+                        {schedules.map((schedule, index) => (
                             <div key={index}>
                                 <div className='input-block-55-45-desktop'>
                                     <Select
@@ -196,7 +215,6 @@ const TeacherForm = () => {
                                 </div>
                             </div>
                         ))}
-
                         {invalid && (
                             <div className='invalid-information'>
                                 <p>Ocorreu um erro salvando as novas informação.</p>
@@ -204,7 +222,7 @@ const TeacherForm = () => {
                         )}
                     </fieldset>
 
-                    <footer>
+                    <footer className='form-footer'>
                         <div>
                             <img src={warningIcon} alt="Aviso importante" />
                             <p>
@@ -213,13 +231,12 @@ const TeacherForm = () => {
                             </p>
                         </div>
 
-                        <button type="submit">Salvar cadastro</button>
+                        <button type='submit' className='save-button'>Salvar alterações</button>
                     </footer>
                 </form>
-
-            </main>
+            </div>
         </div>
     )
 }
 
-export default TeacherForm
+export default UserSettings

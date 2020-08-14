@@ -17,8 +17,14 @@
     height: 8rem;
     border-radius: 50%;
 }
+.teacher-item header .alternative-avatar {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    background-color: #D6C7FF;
+}
 
-.teacher-item header div {
+.teacher-item header div:not(.alternative-avatar) {
     margin-left: 2.4rem;
 }
 
@@ -34,12 +40,65 @@
     margin-top: 0.4rem;
 }
 
-.teacher-item > p {
-    padding: 0 2rem;
+
+/* main */
+.teacher-main-content > p {
+    padding: 0 2rem 1rem 2rem;
     font-size: 1.6rem;
     line-height: 2.8rem;
 }
 
+.teacher-main-content ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid var(--color-line-in-white);
+    padding-top: 2.3rem;
+}
+.teacher-main-content .list-title {
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    color: var(--color-text-complement);
+    font: 500 1.3rem Archivo, sans-serif;
+}
+
+.teacher-main-content li {
+    width: 90%;
+    padding: 0.2rem 2rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--color-line-in-white);
+    border-radius: 0.8rem;
+    background-color: var(--color-box-footer);
+}
+.inactive-day {
+    opacity: 0.4;
+}
+
+.teacher-main-content li > div  {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1.8fr 1fr;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-base);
+    font: 700 1.7rem Archivo, sans-serif;
+}
+.teacher-main-content li > div img {
+    transform: rotate(180deg);
+    margin: 0 auto;
+}
+.teacher-main-content .desktop-inside-label {
+    display: none;
+}
+
+
+/* footer */
 .teacher-item footer {
     padding: 3.2rem 2rem;
     background: var(--color-box-footer);
@@ -101,4 +160,56 @@
     .teacher-item footer button img {
         margin-right: 1.6rem;
     }
+
+
+    .teacher-main-content ul {
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+        padding-top: 2.3rem;
+    }
+    .teacher-main-content .list-title {
+        display: none;
+    }
+    .teacher-main-content li {
+        padding: 2rem 0;
+        margin-bottom: 1.2rem;
+        border: 1px solid var(--color-line-in-white);
+        border-radius: 0.8rem;
+        background-color: var(--color-box-footer);
+        width: 10rem;
+    }
+    .inactive-day {
+        opacity: 0.4;
+    }
+    .teacher-main-content li > div  {
+        width: 100%;
+        height: 7rem;
+        display: flex;
+        flex-direction: column;
+
+        align-items: flex-start;
+        justify-content: center;
+        
+        padding-left: 1rem;
+        color: var(--color-text-base);
+        font: 700 1.7rem Archivo, sans-serif;
+    }
+    .teacher-main-content li > div img {
+        display: none;
+    }
+    .teacher-main-content .desktop-inside-label:nth-child(n+2) {
+        margin-top: 1rem;
+    }
+    .teacher-main-content .desktop-inside-label {
+        display: block;
+        font-size: 1.3rem;
+        font-weight: 400;
+        color: var(--color-text-complement);
+        line-height: 1.5rem;
+    }
+
 }

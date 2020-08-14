@@ -19,20 +19,14 @@ const Signup = () => {
 
     const [invalid, setInvalid] = useState(false)
 
-    
+
     const areInputsValid = () => {
         if (!name.trim() || !surname.trim() || !email.trim() || !password.trim())
             return false
-
         const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        const isEmailValid = regex.test(String(email).toLowerCase())
-
-        if (!isEmailValid)
-            return false
-
-        return true
+        return regex.test(String(email).toLowerCase())
     }
-    
+
 
     const handleFormSubmit = async (event: FormEvent) => {
         event.preventDefault()
@@ -117,7 +111,6 @@ const Signup = () => {
                     <p>Sua plataforma de estudos online.</p>
                 </div>
             </div>
-
         </div>
     )
 }

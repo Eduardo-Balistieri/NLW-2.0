@@ -4,34 +4,47 @@
     background: var(--color-primary);
 }
 
-.page-header .top-bar-container {
-    width: 90%;
-    margin: 0 auto;
+.header {
     display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    text-align: center;
+    background-color: var(--color-primary-dark);
+    min-height: 8rem;
+    padding: 3rem;
+    border-bottom: 1px solid var(--color-primary-darker);
+}
+
+.header-back-button img {
+    width: 4.5rem;
+}
+.header-proffy-logo, 
+.header-back-button {
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.actual-page p {
     color: var(--color-text-in-primary);
-    padding: 1.6rem 0;
+    font-family: Archivo, sans-serif;
+    font-size: 1.45rem;
+    cursor: default;
 }
 
-.page-header .top-bar-container a {
-    height: 3.2rem;
-    transition: opacity 0.2s;
+.header-proffy-logo img {
+    width: 4.5rem;
 }
 
-.page-header .top-bar-container a:hover {
-    opacity: 0.6;
-}
 
-.page-header .top-bar-container > img {
-    height: 1.6rem;
-}
 
+/******/
 .page-header .header-content {
     width: 90%;
-    margin: 0 auto;
     position: relative;
-    margin: 3.2rem auto;
+    margin: 5rem auto 10rem auto;
 }
 
 .page-header .header-content strong {
@@ -64,8 +77,9 @@
     .page-header .header-content {
         flex: 1;
         max-width: 740px;
-        margin: 0 auto;
-        padding-bottom: 48px;
+        
+        margin: 5rem auto 0 auto;
+        padding-bottom: 10rem;
         display: flex;
         flex-direction: column;
         justify-content: center;

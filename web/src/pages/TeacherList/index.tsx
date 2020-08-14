@@ -1,7 +1,7 @@
 import React, { useState, FormEvent } from 'react'
 
 import PageHeader from '../../components/PageHeader'
-import TeacherItem, { Teacher } from '../../components/TeacherItem'
+import TeacherItem from '../../components/TeacherItem'
 import Input from '../../components/Input'
 import Select from '../../components/Select'
 
@@ -9,9 +9,40 @@ import './styles.css'
 import api from '../../services/api'
 
 
+export interface Teacher {
+    id: number
+    name: string
+    avatar: string
+    bio: string
+    whatsapp: string
+    cost: number
+    subject: string
+    week_day: number,
+    from: number,
+    to: number,
+}
+
+
+interface Schedule {
+    week_day: number, from: number, to: number
+}
+
+interface TeacherScheduleList {
+    id: number
+    name: string
+    avatar: string
+    bio: string
+    whatsapp: string
+    cost: number
+    subject: string
+    schedule: Array<Schedule>
+}
+
+
+
 const TeacherList = () => {
 
-    const [teachers, setTeachers] = useState([])
+    const [teachers, setTeachers] = useState<Array<TeacherScheduleList>>([])
 
     const [subject, setSubject] = useState('')
     const [weekDay, setWeekDay] = useState('')
@@ -31,13 +62,37 @@ const TeacherList = () => {
                 time
             }
         })
-        setTeachers(response.data)
+
+        const teachers: Array<TeacherScheduleList> = []
+
+        response.data.forEach((schedule: Teacher) => {
+
+            const { avatar, bio, cost, id, name, subject, from, to, week_day } = schedule
+            const index = teachers.findIndex(teacherSchedule => teacherSchedule?.id === id)
+
+            if (index === -1) {
+                const teacherInformation = { id, subject, name, avatar, bio, cost }
+                const classInfo = { from, to, week_day }
+
+                teachers.push({ ...teacherInformation, schedule: [classInfo] } as TeacherScheduleList)
+            }
+
+            else {
+                const classInfo = { from, to, week_day }
+                teachers[index] = {
+                    ...teachers[index],
+                    schedule: [...teachers[index].schedule, classInfo]
+                }
+            }
+        })
+
+        setTeachers(teachers)
     }
 
 
     return (
         <div id="page-teacher-list" className="container" onSubmit={searchTeachers}>
-            <PageHeader title="Esses são os proffys disponíveis.">
+            <PageHeader actualPage='Estudar' title="Esses são os proffys disponíveis.">
 
                 <form id="search-teachers">
 
@@ -57,7 +112,6 @@ const TeacherList = () => {
                             { value: 'Português', label: 'Português' }
                         ]}
                     />
-
                     <Select
                         label="Dia da semana"
                         name="week_day"
@@ -73,7 +127,6 @@ const TeacherList = () => {
                             { value: '6', label: 'Sábado' }
                         ]}
                     />
-
                     <Input
                         label="Hora"
                         name="time"
@@ -88,7 +141,7 @@ const TeacherList = () => {
             </PageHeader>
 
             <main>
-                {teachers.map((teacher: Teacher) => <TeacherItem key={teacher.id} teacher={teacher} />)}
+                {teachers.map((teacher: TeacherScheduleList) => <TeacherItem key={teacher.id} teacher={teacher} />)}
             </main>
         </div>
     )

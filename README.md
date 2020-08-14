@@ -18,7 +18,9 @@ The project was developed with the following technologies:
 * TypeScript
 * NodeJS
 * SQLite
+* React Native
 
 ## :art: Layouts
 
-[Web](https://www.figma.com/file/GHGS126t7WYjnPZdRKChJF/Proffy-Web) and [Mobile](https://www.figma.com/file/e33KvgUpFdunXxJjHnK7CG/Proffy-Mobile)
+* [Web layout](https://www.figma.com/file/GHGS126t7WYjnPZdRKChJF/Proffy-Web)
+* [Mobile layout](https://www.figma.com/file/e33KvgUpFdunXxJjHnK7CG/Proffy-Mobile)

@@ -18,6 +18,7 @@ routes.post('/connections', connectionControllers.create)
 routes.get('/connections', connectionControllers.index)
 
 routes.post('/signup', usersController.create)
+routes.post('/update-user', usersController.update)
 routes.get('/login', usersController.index)
 
 

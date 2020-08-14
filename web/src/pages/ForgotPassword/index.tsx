@@ -1,18 +1,13 @@
 import React, { useState, FormEvent } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import logoImg from '../../assets/images/logo.svg'
 import DynamicInput from '../../components/DynamicInput'
 import backIcon from '../../assets/images/icons/back.svg'
 import './styles.css'
 
-import api from '../../services/api'
-
 
 const ForgotPassword = () => {
-
-    const history = useHistory()
-
 
     const [email, setEmail] = useState('')
     const [invalid, setInvalid] = useState(false)
