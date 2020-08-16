@@ -9,9 +9,12 @@ import { secret } from '../config/JWT'
 
 interface ScheduleItem {
     week_day: number
-    from: string
     to: string
+    from: string
+    actualPage: number
 }
+
+const ITEMS_PER_PAGE = 1
 
 
 export default class ClassesController {
@@ -47,7 +50,6 @@ export default class ClassesController {
                 'users.id', 'users.name', 'users.whatsapp', 'users.avatar', 'users.bio'
             ])
 
-
         res.json(classes)
     }
 
@@ -64,7 +66,7 @@ export default class ClassesController {
         if (!token)
             return res.status(401).send({ error: 'No token provided.' })
 
-            
+
         jwt.verify(token as string, secret, async (err, _) => {
             if (err)
                 return res.status(500).send({ error: 'Failed to authenticate token.' })

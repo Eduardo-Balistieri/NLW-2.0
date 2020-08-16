@@ -42,6 +42,22 @@
     width: 90%;
 }
 
+.no-teachers-found {
+    width: 100%;
+    margin: 15rem auto;
+    align-items: center;
+    justify-content: center;
+}
+.no-teachers-found p {
+    margin: 0 auto;
+    max-width: 240px;
+    text-align: center;
+    line-height: 2.5rem;
+    color: var(--color-text-complement);
+    font-family: Poppins, sans-serif;
+    font-size: 1.6rem;
+}
+
 
 @media(min-width: 700px) {
     #page-teacher-list {

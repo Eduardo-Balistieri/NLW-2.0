@@ -38,7 +38,6 @@ const UserSettings = () => {
     const [schedules, setSchedules] = useState([{ from: '10:00', to: '15:00', week_day: 1 }])
 
 
-
     const createSchedule = (event: any) => {
         event.preventDefault()
         const newState = [...schedules]

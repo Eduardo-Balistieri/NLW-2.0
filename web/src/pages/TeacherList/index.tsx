@@ -141,6 +141,11 @@ const TeacherList = () => {
             </PageHeader>
 
             <main>
+                {!teachers.length &&
+                    <div className='no-teachers-found'>
+                        <p>Nenhum professor encontrado com sua pesquisa.</p>
+                    </div>}
+
                 {teachers.map((teacher: TeacherScheduleList) => <TeacherItem key={teacher.id} teacher={teacher} />)}
             </main>
         </div>
